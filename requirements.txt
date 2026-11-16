@@ -1,4 +1,4 @@
 Flask
 PyMuPDF
 python-docx
-gunicon
+gunicorn
