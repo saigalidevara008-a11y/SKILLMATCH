@@ -1,0 +1,110 @@
+
+{% extends "base.html" %}
+{% block title %}Analysis Result | SkillMatch{% endblock %}
+
+{% block content %}
+
+<h1>Resume Analysis Result</h1>
+<p class="muted">File: {{ filename }}</p>
+
+<section class="panel score-panel">
+    <h2>Resume Match Score</h2>
+
+    {% if score is not none %}
+        <div class="score">{{ score }}%</div>
+        <p>
+            {% if score >= 80 %}
+                Excellent match!
+            {% elif score >= 60 %}
+                Good match. A few improvements can help.
+            {% elif score >= 40 %}
+                Moderate match. Work on missing skills.
+            {% else %}
+                Your resume needs improvement for this job.
+            {% endif %}
+        </p>
+    {% else %}
+        <p>No recognized skills were found in the job description.</p>
+    {% endif %}
+</section>
+
+<section class="grid">
+
+    <div class="panel">
+        <h2>Skills Found in Resume</h2>
+        {% if resume_skills %}
+            {% for skill in resume_skills %}
+                <span class="tag green">{{ skill }}</span>
+            {% endfor %}
+        {% else %}
+            <p>No recognized skills found.</p>
+        {% endif %}
+    </div>
+
+    <div class="panel">
+        <h2>Required Job Skills</h2>
+        {% if required_skills %}
+            {% for skill in required_skills %}
+                <span class="tag">{{ skill }}</span>
+            {% endfor %}
+        {% else %}
+            <p>No recognized skills found in job description.</p>
+        {% endif %}
+    </div>
+
+</section>
+
+<section class="panel">
+    <h2>Matched Skills</h2>
+
+    {% if matched_skills %}
+        {% for skill in matched_skills %}
+            <span class="tag green">{{ skill }}</span>
+        {% endfor %}
+    {% else %}
+        <p>No matching skills found.</p>
+    {% endif %}
+</section>
+
+<section class="panel">
+    <h2>Missing Skills</h2>
+
+    {% if missing_skills %}
+        {% for skill in missing_skills %}
+            <span class="tag red">{{ skill }}</span>
+        {% endfor %}
+    {% else %}
+        <p>Great! No recognized required skills are missing.</p>
+    {% endif %}
+</section>
+
+<section class="panel">
+    <h2>Step 8: Resume Improvement Suggestions</h2>
+
+    <h3>Skills to Improve</h3>
+    <ul>
+        {% for tip in improvement_tips %}
+            <li>{{ tip }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Resume Section Suggestions</h3>
+    <ul>
+        {% for tip in section_suggestions %}
+            <li>{{ tip }}</li>
+        {% endfor %}
+    </ul>
+
+    {% if missing_sections %}
+        <p><strong>Sections to check:</strong>
+        {{ missing_sections | join(", ") }}</p>
+    {% endif %}
+</section>
+
+<div class="actions">
+    <a class="button" href="/">Analyze Another Resume</a>
+    <a class="button secondary" href="/history">View History</a>
+    <a class="button secondary" href="/dashboard">Dashboard</a>
+</div>
+
+{% endblock %}

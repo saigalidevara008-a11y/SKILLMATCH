@@ -1,0 +1,60 @@
+
+{% extends "base.html" %}
+{% block title %}Saved Analysis | SkillMatch{% endblock %}
+
+{% block content %}
+
+<h1>Saved Resume Analysis</h1>
+
+<section class="panel">
+    <h2>{{ analysis.filename }}</h2>
+
+    <p><strong>Date:</strong> {{ analysis.created_at }}</p>
+    <p><strong>Match Score:</strong>
+        {% if analysis.match_score is not none %}
+            {{ analysis.match_score }}%
+        {% else %}
+            Not available
+        {% endif %}
+    </p>
+</section>
+
+<section class="panel">
+    <h2>Matched Skills</h2>
+    {% for skill in analysis.matched_skills %}
+        <span class="tag green">{{ skill }}</span>
+    {% else %}
+        <p>No matched skills.</p>
+    {% endfor %}
+</section>
+
+<section class="panel">
+    <h2>Missing Skills</h2>
+    {% for skill in analysis.missing_skills %}
+        <span class="tag red">{{ skill }}</span>
+    {% else %}
+        <p>No missing skills.</p>
+    {% endfor %}
+</section>
+
+<section class="panel">
+    <h2>Improvement Suggestions</h2>
+
+    <h3>Skills to Improve</h3>
+    <ul>
+        {% for tip in improvement_tips %}
+            <li>{{ tip }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Resume Sections</h3>
+    <ul>
+        {% for tip in section_suggestions %}
+            <li>{{ tip }}</li>
+        {% endfor %}
+    </ul>
+</section>
+
+<a href="/history" class="button">Back to History</a>
+
+{% endblock %}
