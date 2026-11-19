@@ -75,6 +75,7 @@ def init_db():
 
     conn.commit()
     conn.close()
+init_db()
 
 
 def extract_text(file):
